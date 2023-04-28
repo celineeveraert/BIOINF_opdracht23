@@ -1,0 +1,23 @@
+---
+title: "NotebookToStartWith"
+author: "Celine Everaert"
+date: "2023-04-28"
+output: html_document
+---
+
+## Reading and preparing expression data
+
+```{r}
+exp_data_table <- read_table("exp_data_ALS_gene.tsv") %>% column_to_rownames("hgnc_symbol")
+exp_data_table <- exp_data_table[rowSums(exp_data_table)>1,]
+exp_data_table <- as.matrix(exp_data_table)
+
+data_exprs <- Biobase::ExpressionSet(assayData = exp_data_table)
+bulk.mtx <- exprs(data_exprs)
+```
+
+## Reading and preparing single cell data
+```{r}
+pbmc.sce <- readRDS("pbmcs_single_cell.RDS")
+```
+
